@@ -24,7 +24,7 @@ Built with a mobile-first approach, this system runs entirely in the browser wit
 
 ## 🚀 Live Demo
 
-[Link to your GitHub Pages URL - e.g., https://shushil-m.github.io/mobile-fee-manager]
+[Link to your GitHub Pages URL - e.g.,https://maddeshiyashushil01-beep.github.io/mobile-fees-manger-/ ]
 
 ## 📖 How to Use
 
