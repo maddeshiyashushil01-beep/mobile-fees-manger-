@@ -3,125 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Fee & SMS Reminder System</title>
+    <title>Fee Reminder System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans pb-12">
-
-    <!-- Header -->
     <header class="bg-indigo-600 text-white p-4 shadow-md sticky top-0 z-50">
         <div class="max-w-md mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-bold flex items-center gap-2">
-                <i class="fa-solid fa-graduation-cap"></i> FeeReminder Mobile
-            </h1>
-            <button onclick="openAddModal()" class="bg-indigo-500 hover:bg-indigo-400 text-white text-sm px-3 py-1.5 rounded-lg font-medium shadow transition">
-                <i class="fa-solid fa-plus mr-1"></i> Add Student
-            </button>
+            <h1 class="text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> FeeReminder</h1>
+            <button onclick="openAddModal()" class="bg-indigo-500 hover:bg-indigo-400 text-white text-sm px-3 py-1.5 rounded-lg shadow"><i class="fa-solid fa-plus"></i> Add</button>
         </div>
     </header>
 
-    <!-- Main Container -->
     <main class="max-w-md mx-auto p-4 space-y-4">
-
-        <!-- Analytics Cards -->
         <div class="grid grid-cols-3 gap-2">
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center">
-                <p class="text-xs text-slate-500 font-medium">Total</p>
-                <p id="totalCount" class="text-lg font-bold text-slate-800">0</p>
-            </div>
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center">
-                <p class="text-xs text-rose-500 font-medium">Pending</p>
-                <p id="pendingCount" class="text-lg font-bold text-rose-600">0</p>
-            </div>
-            <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center">
-                <p class="text-xs text-emerald-500 font-medium">Collected</p>
-                <p id="collectedAmount" class="text-sm font-bold text-emerald-600 mt-1">₹0</p>
-            </div>
+            <div class="bg-white p-3 rounded-xl shadow-sm text-center"><p class="text-xs text-slate-500">Total</p><p id="totalCount" class="text-lg font-bold">0</p></div>
+            <div class="bg-white p-3 rounded-xl shadow-sm text-center"><p class="text-xs text-rose-500">Pending</p><p id="pendingCount" class="text-lg font-bold text-rose-600">0</p></div>
+            <div class="bg-white p-3 rounded-xl shadow-sm text-center"><p class="text-xs text-emerald-500">Collected</p><p id="collectedAmount" class="text-sm font-bold text-emerald-600 mt-1">₹0</p></div>
         </div>
 
-        <!-- Filters & Search -->
-        <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 space-y-2">
-            <div class="relative">
-                <i class="fa-solid fa-search absolute left-3 top-3 text-slate-400 text-sm"></i>
-                <input type="text" id="searchInput" oninput="renderStudents()" placeholder="Search student or parent..." class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <select id="filterMonth" onchange="renderStudents()" class="text-sm bg-slate-50 border border-slate-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="">All Months</option>
-                    <option value="January">January</option><option value="February">February</option><option value="March">March</option>
-                    <option value="April">April</option><option value="May">May</option><option value="June">June</option>
-                    <option value="July">July</option><option value="August">August</option><option value="September">September</option>
-                    <option value="October">October</option><option value="November">November</option><option value="December">December</option>
-                </select>
-                <select id="filterStatus" onchange="renderStudents()" class="text-sm bg-slate-50 border border-slate-200 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                    <option value="">All Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Paid">Paid</option>
-                </select>
-            </div>
+        <div class="bg-white p-3 rounded-xl shadow-sm">
+            <input type="text" id="searchInput" oninput="renderStudents()" placeholder="Search by name or phone..." class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg">
         </div>
 
-        <!-- Student List -->
-        <div id="studentList" class="space-y-3">
-            <!-- Dynamic Cards injected here -->
-        </div>
+        <div id="studentList" class="space-y-3"></div>
     </main>
 
-    <!-- Add/Edit Student Modal -->
-    <div id="studentModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-xl space-y-4">
-            <div class="flex justify-between items-center border-b pb-2">
-                <h3 id="modalTitle" class="font-bold text-base text-slate-800">Add New Student</h3>
-                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+    <!-- Modal Form -->
+    <div id="studentModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-xl space-y-4 overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between border-b pb-2">
+                <h3 id="modalTitle" class="font-bold text-base">Add Student</h3>
+                <button onclick="closeModal()"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
             <form id="studentForm" onsubmit="saveStudent(event)" class="space-y-3 text-sm">
                 <input type="hidden" id="studentId">
-                <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Student Name</label>
-                    <input type="text" id="name" required class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs mb-1">Name</label><input type="text" id="name" required class="w-full p-2 border rounded-lg"></div>
+                    <div><label class="block text-xs mb-1">Section</label><input type="text" id="section" class="w-full p-2 border rounded-lg"></div>
                 </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Parent Phone (e.g. 919876543210)</label>
-                    <input type="tel" id="phone" required class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                <div><label class="block text-xs mb-1">Phone (eg. 919876543210)</label><input type="tel" id="phone" required class="w-full p-2 border rounded-lg"></div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div><label class="block text-xs mb-1">Admission Date</label><input type="date" id="admission_date" class="w-full p-2 border rounded-lg"></div>
+                    <div><label class="block text-xs mb-1">Payment Date</label><input type="date" id="payment_date" class="w-full p-2 border rounded-lg"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">Fee Month</label>
-                        <select id="month" required class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option value="January">January</option><option value="February">February</option><option value="March">March</option>
-                            <option value="April">April</option><option value="May">May</option><option value="June">June</option>
-                            <option value="July">July</option><option value="August">August</option><option value="September">September</option>
-                            <option value="October">October</option><option value="November" selected>November</option><option value="December">December</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">Year</label>
-                        <input type="number" id="year" value="2026" required class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
-                    </div>
+                    <div><label class="block text-xs mb-1">Month</label><input type="text" id="month" value="November" required class="w-full p-2 border rounded-lg"></div>
+                    <div><label class="block text-xs mb-1">Year</label><input type="number" id="year" value="2026" required class="w-full p-2 border rounded-lg"></div>
                 </div>
                 <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">Amount (₹)</label>
-                        <input type="number" id="amount" required class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-slate-600 mb-1">Status</label>
-                        <select id="status" class="w-full p-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
-                            <option value="Pending">Pending</option>
-                            <option value="Paid">Paid</option>
-                        </select>
-                    </div>
+                    <div><label class="block text-xs mb-1">Amount (₹)</label><input type="number" id="amount" required class="w-full p-2 border rounded-lg"></div>
+                    <div><label class="block text-xs mb-1">Status</label><select id="status" class="w-full p-2 border rounded-lg"><option value="Pending">Pending</option><option value="Paid">Paid</option></select></div>
                 </div>
-                <div class="pt-2 flex gap-2">
-                    <button type="button" onclick="closeModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-lg font-medium transition">Cancel</button>
-                    <button type="submit" class="w-1/2 bg-indigo-600 hover:bg-indigo-500 text-white py-2 rounded-lg font-medium transition">Save</button>
+                <div class="flex gap-2 pt-2">
+                    <button type="button" onclick="closeModal()" class="w-1/2 bg-slate-100 py-2 rounded-lg">Cancel</button>
+                    <button type="submit" class="w-1/2 bg-indigo-600 text-white py-2 rounded-lg">Save</button>
                 </div>
             </form>
         </div>
     </div>
-
-    <!-- Link to external JavaScript file -->
     <script src="app.js"></script>
 </body>
 </html>
