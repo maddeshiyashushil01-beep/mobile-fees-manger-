@@ -1,4 +1,5 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxgOn9QiCK9ZnEjtMdsmeBcldIouSNjKiQliWKEJKoBSDzdyfpFIMkfGWjt0UuZkiRNcQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5Hu_DPbn6gaTj3gfVjKgsct72OrHGzgqwKtm1rKawFAdg7L8Utq_FeYpbOyUNH4vEFA/exec";
+
 let students = [];
 
 // Show loading state when fetching data
